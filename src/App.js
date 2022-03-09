@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, RudeButton, Rudeness, RudenessTitle } from './App.styled';
 import { wordLists } from './wordLists';
 import yourea from "./assets/voice1/yourea.mp3";
-const sounds = wordLists.map(group => group.map(word => ({ word, sound: require(`./assets/voice1/${word.replace(" ", "")}.mp3`) }))).flat();
+const sounds = wordLists.map(group => group.map(word => ({ word, sound: require(`./assets/voice1/${word.replace(" ", "")}.mp3`) })));
 function App() {
   const [selected, setSelected] = useState(null);
 
@@ -15,9 +15,9 @@ function App() {
     setSelected(newSelected)
 
     const word0 = new Audio(yourea);
-    const word1 = new Audio(sounds.find(s => s.word === wordLists[0][newSelected[0]]).sound);
-    const word2 = new Audio(sounds.find(s => s.word === wordLists[1][newSelected[1]]).sound);
-    const word3 = new Audio(sounds.find(s => s.word === wordLists[2][newSelected[2]]).sound);
+    const word1 = new Audio(sounds[0][newSelected[0]].sound);
+    const word2 = new Audio(sounds[1][newSelected[1]].sound);
+    const word3 = new Audio(sounds[2][newSelected[2]].sound);
 
     word0.play();
     word0.onended = () => {
@@ -29,7 +29,6 @@ function App() {
     word2.onended = () => {
       word3.play();
     }
-
   }
 
   return (

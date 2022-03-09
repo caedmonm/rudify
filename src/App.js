@@ -1,48 +1,125 @@
-import React, { useState } from "react";
-import { Container, RudeButton, Rudeness, RudenessTitle } from './App.styled';
-import { wordLists } from './wordLists';
-import yourea from "./assets/voice1/yourea.mp3";
-const sounds = wordLists.map(group => group.map(word => ({ word, sound: require(`./assets/voice1/${word.replace(" ", "")}.mp3`) })));
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  CopiedMessage,
+  RudeButton,
+  Rudeness,
+  RudenessTitle,
+  ShareContainer,
+} from "./App.styled";
+import { wordLists } from "./wordLists";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Share, Zap } from "react-feather";
+
+const yourea = new Audio(require("./assets/voice1/yourea.mp3"));
+const sounds = wordLists.map((group) =>
+  group.map((word) => ({
+    word,
+    sound: new Audio(require(`./assets/voice1/${word.replace(" ", "")}.mp3`)),
+  }))
+);
+
 function App() {
   const [selected, setSelected] = useState(null);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [urlCopied, setUrlCopied] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selected === null) {
+      return false;
+    }
+
+    yourea.play();
+
+    yourea.onended = () => {
+      sounds[0][selected[0]].sound.play();
+    };
+    sounds[0][selected[0]].sound.onended = () => {
+      sounds[1][selected[1]].sound.play();
+    };
+    sounds[1][selected[1]].sound.onended = () => {
+      sounds[2][selected[2]].sound.play();
+    };
+
+    navigate("/" + selected.join("/"));
+
+    setUrlCopied(false);
+  }, [selected]);
 
   const pick = () => {
-    const newSelected = [
-      Math.floor(Math.random() * wordLists[0].length),
-      Math.floor(Math.random() * wordLists[1].length),
-      Math.floor(Math.random() * wordLists[2].length),
-    ]
-    setSelected(newSelected)
+		// this is to init on ios
+    if (firstLoad) {
+      yourea.play();
+      setTimeout(() => {
+        yourea.pause();
+      }, 1);
+    }
 
-    const word0 = new Audio(yourea);
-    const word1 = new Audio(sounds[0][newSelected[0]].sound);
-    const word2 = new Audio(sounds[1][newSelected[1]].sound);
-    const word3 = new Audio(sounds[2][newSelected[2]].sound);
+    if (firstLoad && location.pathname) {
+      const newSelected = location.pathname
+        .split("/")
+        .filter((i) => i !== "")
+        .map((i) => Number(i));
+      setFirstLoad(false);
+      if (newSelected.length === 3) {
+				// this is for web - the ios init fix was breaking it first play
+        setTimeout(() => {
+          return setSelected(newSelected);
+        }, 1);
+      }
+    } else {
+			return setSelected([
+				Math.floor(Math.random() * wordLists[0].length),
+				Math.floor(Math.random() * wordLists[1].length),
+				Math.floor(Math.random() * wordLists[2].length),
+			]);
+		}
+    
+  };
 
-    word0.play();
-    word0.onended = () => {
-      word1.play();
-    }
-    word1.onended = () => {
-      word2.play();
-    }
-    word2.onended = () => {
-      word3.play();
-    }
-  }
+  const copyURL = () => {
+    setUrlCopied(false);
+    setTimeout(() => {
+      const dummy = document.createElement("input");
+      const text = window.location.href;
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+      setUrlCopied(true);
+    }, 10);
+  };
 
   return (
     <Container>
-      {selected !== null ?
+      {/* <Branding>Rudify!</Branding> */}
+      {/* <Credit>By Caedmon &amp; Ivo Mullin</Credit> */}
+      {selected !== null ? (
         <>
           <RudenessTitle>You're a</RudenessTitle>
-          <Rudeness>{wordLists[0][selected[0]]} {wordLists[1][selected[1]]} {wordLists[2][selected[2]]}</Rudeness>
-        </> : <>
+          <Rudeness>
+            {wordLists[0][selected[0]]} {wordLists[1][selected[1]]}{" "}
+            {wordLists[2][selected[2]]}
+          </Rudeness>
+        </>
+      ) : (
+        <>
           <RudenessTitle></RudenessTitle>
           <Rudeness></Rudeness>
         </>
-      }
-      <RudeButton onClick={pick}>!</RudeButton>
+      )}
+      <RudeButton onClick={pick}>
+        <Zap color="#222" />
+      </RudeButton>
+      {selected && (
+        <ShareContainer>
+          <Share color={"#222"} size={30} onClick={copyURL} style={{cursor:"pointer"}} />
+          <CopiedMessage>{urlCopied && <>Link Copied</>}</CopiedMessage>
+        </ShareContainer>
+      )}
     </Container>
   );
 }

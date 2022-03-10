@@ -56,26 +56,27 @@ function App() {
         yourea.pause();
       }, 1);
     }
-
+		
     const urlPreset = location.pathname
       .split("/")
       .filter((i) => i !== "")
       .map((i) => Number(i));
 
-    if (firstLoad && urlPreset.length === 3) {
+    const newSelection =
+      urlPreset.length === 3 && firstLoad
+        ? urlPreset
+        : [
+            Math.floor(Math.random() * wordLists[0].length),
+            Math.floor(Math.random() * wordLists[1].length),
+            Math.floor(Math.random() * wordLists[2].length),
+          ];
+
+    setTimeout(() => {
+      setSelected(newSelection);
+    }, 2);
+
+    if (firstLoad) {
       setFirstLoad(false);
-      // this is for web - the ios init fix was breaking it first play
-      setTimeout(() => {
-        return setSelected(urlPreset);
-      }, 2);
-    } else {
-      setTimeout(() => {
-        return setSelected([
-          Math.floor(Math.random() * wordLists[0].length),
-          Math.floor(Math.random() * wordLists[1].length),
-          Math.floor(Math.random() * wordLists[2].length),
-        ]);
-      }, 2);
     }
   };
 

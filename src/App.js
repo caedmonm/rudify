@@ -49,7 +49,7 @@ function App() {
   }, [selected]);
 
   const pick = () => {
-		// this is to init on ios
+    // this is to init on ios
     if (firstLoad) {
       yourea.play();
       setTimeout(() => {
@@ -57,26 +57,26 @@ function App() {
       }, 1);
     }
 
-    if (firstLoad && location.pathname) {
-      const newSelected = location.pathname
-        .split("/")
-        .filter((i) => i !== "")
-        .map((i) => Number(i));
+    const urlPreset = location.pathname
+      .split("/")
+      .filter((i) => i !== "")
+      .map((i) => Number(i));
+
+    if (firstLoad && urlPreset.length === 3) {
       setFirstLoad(false);
-      if (newSelected.length === 3) {
-				// this is for web - the ios init fix was breaking it first play
-        setTimeout(() => {
-          return setSelected(newSelected);
-        }, 1);
-      }
+      // this is for web - the ios init fix was breaking it first play
+      setTimeout(() => {
+        return setSelected(urlPreset);
+      }, 2);
     } else {
-			return setSelected([
-				Math.floor(Math.random() * wordLists[0].length),
-				Math.floor(Math.random() * wordLists[1].length),
-				Math.floor(Math.random() * wordLists[2].length),
-			]);
-		}
-    
+      setTimeout(() => {
+        return setSelected([
+          Math.floor(Math.random() * wordLists[0].length),
+          Math.floor(Math.random() * wordLists[1].length),
+          Math.floor(Math.random() * wordLists[2].length),
+        ]);
+      }, 2);
+    }
   };
 
   const copyURL = () => {
@@ -116,7 +116,12 @@ function App() {
       </RudeButton>
       {selected && (
         <ShareContainer>
-          <Share color={"#222"} size={30} onClick={copyURL} style={{cursor:"pointer"}} />
+          <Share
+            color={"#222"}
+            size={30}
+            onClick={copyURL}
+            style={{ cursor: "pointer" }}
+          />
           <CopiedMessage>{urlCopied && <>Link Copied</>}</CopiedMessage>
         </ShareContainer>
       )}

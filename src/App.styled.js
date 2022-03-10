@@ -13,6 +13,7 @@ export const Container = styled.section`
 `;
 
 export const RudeButton = styled.button`
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 100px;
   height: 100px;
   background-color: #eee;
@@ -23,7 +24,7 @@ export const RudeButton = styled.button`
   justify-content: center;
   align-items: center;
   outline: 0;
-	cursor: pointer;
+  cursor: pointer;
   filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.1))
     drop-shadow(-5px -5px 5px rgba(255, 255, 255, 0.8));
   border-radius: 30px;
@@ -39,15 +40,7 @@ export const RudeButton = styled.button`
       height: 33px;
     }
   }
-  /* &:active {
-    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0.1))
-      drop-shadow(-0 -0 0 rgba(255, 255, 255, 0.8));
-    color: #000;
-    svg {
-      width: 33px;
-      height: 33px;
-    }
-  } */
+
   svg {
     width: 34px;
     height: 34px;

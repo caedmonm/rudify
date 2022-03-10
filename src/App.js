@@ -127,7 +127,7 @@ function App() {
             color={"#222"}
             size={30}
             onClick={copyURL}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
           />
           <CopiedMessage>{urlCopied && <>Link Copied</>}</CopiedMessage>
         </ShareContainer>

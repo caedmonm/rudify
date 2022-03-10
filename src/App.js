@@ -36,12 +36,18 @@ function App() {
     yourea.onended = () => {
       sounds[0][selected[0]].sound.play();
     };
-    sounds[0][selected[0]].sound.onended = () => {
-      sounds[1][selected[1]].sound.play();
-    };
-    sounds[1][selected[1]].sound.onended = () => {
-      sounds[2][selected[2]].sound.play();
-    };
+
+		sounds[0][selected[0]].sound.ontimeupdate =  function() {
+			if(this.currentTime/sounds[0][selected[0]].sound.duration > .65){
+				sounds[1][selected[1]].sound.play();
+			}
+		}
+
+		sounds[1][selected[1]].sound.ontimeupdate =  function() {
+			if(this.currentTime/sounds[1][selected[1]].sound.duration > .65){
+				sounds[2][selected[2]].sound.play();
+			}
+		}
 
     navigate("/" + selected.join("/"));
 

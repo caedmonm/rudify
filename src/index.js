@@ -6,7 +6,7 @@ import "./css/App.css";
 import { HashRouter as Router } from "react-router-dom";
 
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-163918366-1');
+ReactGA.initialize('G-6VH9WS845R');
 
 ReactGA.pageview(window.location.pathname + window.location.search);
 

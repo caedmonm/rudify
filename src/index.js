@@ -7,7 +7,7 @@ import { HashRouter as Router } from "react-router-dom";
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
-    gtmId: 'G-6VH9WS845R'
+    gtmId: 'GTM-MJ7M6WR'
 }
 
 TagManager.initialize(tagManagerArgs)

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.fb4697b1.css",
-    "main.js": "/static/js/main.6e1b9af4.js",
+    "main.js": "/static/js/main.17667975.js",
     "static/js/787.7b33ca42.chunk.js": "/static/js/787.7b33ca42.chunk.js",
     "static/media/squelchy.mp3": "/static/media/squelchy.1592e5bd7ed0b84a88a2.mp3",
     "static/media/disgusting.mp3": "/static/media/disgusting.3cdb658ce6446ccd1fb2.mp3",
@@ -113,11 +113,11 @@
     "static/media/bog.mp3": "/static/media/bog.58a646c23e93329b5693.mp3",
     "index.html": "/index.html",
     "main.fb4697b1.css.map": "/static/css/main.fb4697b1.css.map",
-    "main.6e1b9af4.js.map": "/static/js/main.6e1b9af4.js.map",
+    "main.17667975.js.map": "/static/js/main.17667975.js.map",
     "787.7b33ca42.chunk.js.map": "/static/js/787.7b33ca42.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fb4697b1.css",
-    "static/js/main.6e1b9af4.js"
+    "static/js/main.17667975.js"
   ]
 }

@@ -4,12 +4,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./css/App.css";
 import { HashRouter as Router } from "react-router-dom";
+import TagManager from 'react-gtm-module'
 
-import ReactGA from 'react-ga';
-ReactGA.initialize('G-6VH9WS845R');
+const tagManagerArgs = {
+    gtmId: 'G-6VH9WS845R'
+}
 
-ReactGA.pageview(window.location.pathname + window.location.search);
-
+TagManager.initialize(tagManagerArgs)
 ReactDOM.render(
   <Router>
     <React.StrictMode>
